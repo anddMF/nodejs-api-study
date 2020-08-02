@@ -9,7 +9,7 @@ app.use(express.urlencoded({extended: true}));
 // database
 mongoose.connect(process.env.DATABASE_CONNECTION_STRING, {
     useUnifiedTopology: true,
-    useFindAndModify: true,
+    useFindAndModify: false,
     useNewUrlParser: true,
     useCreateIndex: true 
 });

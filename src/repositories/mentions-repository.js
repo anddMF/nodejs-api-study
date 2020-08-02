@@ -9,4 +9,10 @@ exports.listMentions = async () => {
 exports.createMention = async data =>{
     const model = new  Mentions(data);
     await model.save();
-}
+};
+
+exports.updateMention = async (id, data) => {
+    await Mentions.findByIdAndUpdate(id, {
+        $set: data
+    });
+};
