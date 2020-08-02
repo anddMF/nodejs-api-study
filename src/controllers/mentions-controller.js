@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const Mentions = mongoose.model('Mentions');
 const repository = require('../repositories/mentions-repository');
+const { validationResult } = require('express-validator');
 
 // listar 
 exports.listMentions = async (req, res) => {
@@ -16,6 +17,13 @@ exports.listMentions = async (req, res) => {
 
 // criar 
 exports.createMention = async (req, res) => {
+    
+    //verificação dos parametros estabelecidos no 'check' do mentions-route
+    const {errors} = validationResult(req);
+    if(errors.length > 0){
+        return res.status(400).send({message: errors});
+    }
+
     try {
 
         await repository.createMention({
