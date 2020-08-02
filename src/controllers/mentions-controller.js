@@ -1,11 +1,14 @@
 const mongoose = require('mongoose');
 const Mentions = mongoose.model('Mentions');
+const repository = require('../repositories/mentions-repository');
 
 // listar 
 exports.listMentions = async (req, res) => {
     try {
-        const data = await Mentions.find({});
+
+        const data = await repository.listMentions();
         res.status(200).send(data);
+
     } catch (e) {
         res.status(500).send({ message: 'Falha ao CARREGAR as menções.' })
     }
@@ -14,15 +17,14 @@ exports.listMentions = async (req, res) => {
 // criar 
 exports.createMention = async (req, res) => {
     try {
-        const mention = new Mentions({
-            friend:req.body.friend,
-            mention: req.body.mention
-        });
-        console.log(mention);
 
-        await mention.save();
+        await repository.createMention({
+            friend: req.body.friend,
+            mention: req.body.mention
+        })
 
         res.status(201).send({message: 'Menção cadastrada com sucesso.'});
+
     } catch (e) {
         res.status(500).send({ message: 'Falha ao CADASTRAR as menções.' });
     }
