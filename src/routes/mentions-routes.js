@@ -15,4 +15,6 @@ router.put('/:id', [
     check('mention').isLength({ min: 20, max: 280 }).withMessage("O raio da frase precisa estar entre 20 e 280 caracteres")
 ], mentionsController.updateMention);
 
+router.delete('/:id', mentionsController.deleteMention);
+
 module.exports = router;

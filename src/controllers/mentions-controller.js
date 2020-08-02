@@ -11,6 +11,7 @@ exports.listMentions = async (req, res) => {
         res.status(200).send(data);
 
     } catch (e) {
+        console.log(e);
         res.status(500).send({ message: 'Falha ao CARREGAR as menções.' })
     }
 };
@@ -34,6 +35,7 @@ exports.createMention = async (req, res) => {
         res.status(201).send({message: 'Menção cadastrada com sucesso.'});
 
     } catch (e) {
+        console.log(e);
         res.status(500).send({ message: 'Falha ao CADASTRAR as menções.' });
     }
 };
@@ -45,11 +47,29 @@ exports.updateMention = async (req, res) => {
     if(errors.length > 0){
         return res.status(400).send({message: errors})
     }
-    
+
     try{
         await repository.updateMention(req.params.id, req.body);
         res.status(200).send({message: 'Editado com sucesso.'})
     } catch(e){
+        console.log(e);
         res.status(500).send({message: 'Erro ao editar.'})
+    }
+}
+
+// deletar
+exports.deleteMention = async (req, res) => {
+
+    try{
+        console.log(req);
+        console.log(res);
+        await repository.deleteMention(req.params.id);
+        
+        res.status(200).send({message: 'Passamos o mention, chefe.'});
+
+
+    } catch (e){
+        console.log(e);
+        res.status(500).send({message: 'Erro ao deletar.'});
     }
 }
